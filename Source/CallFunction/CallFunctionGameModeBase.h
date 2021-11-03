@@ -11,15 +11,15 @@ USTRUCT()
 struct CALLFUNCTION_API FCallMessage
 {
 	GENERATED_USTRUCT_BODY()
-	
-	UPROPERTY()
-	FString Name;
+
+		UPROPERTY()
+		FString Name;
 
 	UPROPERTY()
-	int Number;
+		int Number;
 
 	UPROPERTY()
-	FString Message;
+		FString Message;
 };
 
 USTRUCT()
@@ -27,27 +27,24 @@ struct CALLFUNCTION_API FFeedBack
 {
 	GENERATED_USTRUCT_BODY()
 
-	UPROPERTY()
-	FString Sender;
+		UPROPERTY()
+		FString Sender;
 
-	 UPROPERTY()
-	FString Message;
+	UPROPERTY()
+		FString Message;
 };
 
-/**
- * 
- */
 UCLASS()
 class CALLFUNCTION_API ACallFunctionGameModeBase : public AGameModeBase
 {
 	GENERATED_BODY()
-public:
+	
 	UFUNCTION(Exec)
-	FFeedBack CallMe(FCallMessage ReceiveMessage);
+	TArray<FFeedBack> CallMe(TArray<FCallMessage> ReceiveMessages);
 
 	/** 采用CallFunctionByNameWithArguments函数，通过字符串来调用函数，然后返回函数的返回值 */
 	UFUNCTION(BlueprintCallable)
-	FString CallCallMe(FString ParamString); 
+	FString CallCallMe(FString ParamString);
 
 	/** Called by VM to execute a UFunction with a filled in UStruct of parameters */
 	virtual void ProcessEvent(UFunction* Function, void* Parms) override;

@@ -2,14 +2,23 @@
 
 
 #include "CallFunctionGameModeBase.h"
+
+// Copyright Epic Games, Inc. All Rights Reserved.
+
+
 PRAGMA_DISABLE_OPTIMIZATION
-FFeedBack ACallFunctionGameModeBase::CallMe(FCallMessage ReceiveMessage)
+TArray<FFeedBack> ACallFunctionGameModeBase::CallMe(TArray<FCallMessage> ReceiveMessages)
 {
-	UE_LOG(LogTemp,Warning,TEXT("Recieve Message %s"), *ReceiveMessage.Message);
-	FFeedBack fb;
-	fb.Sender=TEXT("TDY");
-	fb.Message=FString::Printf(TEXT("Hello,%s,your Number is %d"), *ReceiveMessage.Name, ReceiveMessage.Number);
-	return fb;
+	TArray<FFeedBack> fbs;
+	for (int32 i = 0; i < ReceiveMessages.Num(); i++)
+	{
+		FFeedBack fb;
+		fb.Sender = TEXT("TDY");
+		fb.Message = FString::Printf(TEXT("%s, Number= %d,call me %d times!"), *(ReceiveMessages[i].Name), ReceiveMessages[i].Number,i);
+		fbs.Add(fb);
+	}
+
+	return fbs;
 }
 
 FString ACallFunctionGameModeBase::CallCallMe(FString ParamString)
@@ -52,6 +61,6 @@ void ACallFunctionGameModeBase::ProcessEvent(UFunction* Function, void* Parms)
 			//GEngine->AddOnScreenDebugMessage(0, 5.0f, FColor::Yellow, ReturnStr);
 		}
 	}
-	
+
 }
 PRAGMA_ENABLE_OPTIMIZATION
